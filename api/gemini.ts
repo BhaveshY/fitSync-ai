@@ -1,10 +1,9 @@
-import type { VercelRequest, VercelResponse } from '@vercel/node';
+import type { VercelRequest, VercelResponse } from 'vercel';
 
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 const GEMINI_MODEL = 'gemini-2.0-flash-lite';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-  // Only allow POST
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
@@ -50,8 +49,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     const data = await geminiRes.json();
-
-    // Extract the text from Gemini response
     const text = data?.candidates?.[0]?.content?.parts?.[0]?.text || '';
 
     return res.status(200).json({ text });
