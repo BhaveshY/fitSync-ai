@@ -1,0 +1,38 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "Stores user's fitness data.",
+      "type": "object",
+      "properties": {
+        "dietPlan": {
+          "type": "string",
+          "description": "JSON stringified diet plan"
+        },
+        "workoutPlan": {
+          "type": "string",
+          "description": "JSON stringified workout plan"
+        },
+        "progress": {
+          "type": "string",
+          "description": "JSON stringified progress array"
+        },
+        "dailyTracking": {
+          "type": "string",
+          "description": "JSON stringified daily tracking record"
+        },
+        "uid": {
+          "type": "string",
+          "description": "User ID"
+        }
+      },
+      "required": ["uid"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/UserProfile" },
+      "description": "User profiles containing fitness data."
+    }
+  }
+}
