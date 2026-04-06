@@ -31,7 +31,10 @@ export default function Dashboard() {
       const prompt = `Generate a very short, 2-sentence highly personalized motivational insight for today. Today's workout is ${todayWorkout.name} (${todayWorkout.exercises.length} exercises). Today's calorie target is ${dietPlan.dailyTotal.cal} kcal.`;
       const response = await generateAIAdvice(prompt);
       setInsight(response);
-      localStorage.setItem(`insight_${dateStr}`, response);
+      // Only cache successful responses, not error messages
+      if (!response.includes('error occurred') && !response.includes('try again')) {
+        localStorage.setItem(`insight_${dateStr}`, response);
+      }
       setLoadingInsight(false);
     };
     fetchInsight();
